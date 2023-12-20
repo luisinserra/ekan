@@ -3,6 +3,8 @@ package br.com.gotop.ap1_beneficiarios.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +18,7 @@ import br.com.gotop.ap1_beneficiarios.model.Beneficiario;
 @Repository
 public interface BeneficiarioRepository extends CrudRepository<Beneficiario, Integer> {
 
-	List<Beneficiario> findAllByOrderByNome();
+	Page<Beneficiario> findAllByOrderByNome(final Pageable pageable);
 	
 	Optional<Beneficiario> findById(Integer id);
 }

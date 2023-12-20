@@ -18,12 +18,12 @@ public class Beneficiario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public int id;
-	public String nome;
-	public String telefone;
-	public java.util.Date dataNascimento;
-	public java.sql.Timestamp dataInclusao;
-	public java.util.Date dataAtualizacao;
+	private int id;
+	private String nome;
+	private String telefone;
+	private java.util.Date dataNascimento;
+	private java.sql.Timestamp dataInclusao;
+	private java.util.Date dataAtualizacao;
 	
 	public Beneficiario() {}
 	

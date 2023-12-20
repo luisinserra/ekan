@@ -17,11 +17,12 @@ public class Documento {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public int id;
-	public String tipoDocumento;
-	public String descricao;
-	public java.sql.Timestamp dataInclusão;
-	public java.sql.Date dataAtualizacao;
+	private int id;
+	private String tipoDocumento;
+	private String descricao;
+	private java.sql.Timestamp dataInclusão;
+	private java.sql.Date dataAtualizacao;
+	private String valor;
 	
 	public int getId() {
 		return id;
@@ -52,5 +53,11 @@ public class Documento {
 	}
 	public void setDataAtualizacao(java.sql.Date dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
+	}
+	public String getValor() {
+		return valor;
+	}
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 }

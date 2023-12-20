@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +18,7 @@ import com.google.gson.Gson;
 
 import br.com.gotop.ap1_beneficiarios.model.Beneficiario;
 import br.com.gotop.ap1_beneficiarios.model.BeneficiarioDocumento;
+import br.com.gotop.ap1_beneficiarios.model.dto.BeneficiarioDto;
 import br.com.gotop.ap1_beneficiarios.service.BeneficiarioDocumentoService;
 import br.com.gotop.ap1_beneficiarios.service.BeneficiarioService;
 
@@ -46,5 +50,24 @@ public class BeneficiarioEndpoint {
 		Gson gson = new Gson();
 		String json = gson.toJson(listaBeneficiariosComDocumentos);
 		return json;
+	}
+	
+	@GetMapping("/buscarBeneficiarioPorId")
+	public Beneficiario buscarBeneficiarioPorId(@RequestParam(value = "idBeneficiario", required = true) final Integer idBeneficiario) {
+		return beneficiarioService.buscarBeneficiarioPorId(idBeneficiario);
+	}
+	
+	@GetMapping("/listaPaginadaDeBeneficiarios")
+	public Page<BeneficiarioDto> listaPaginadaDeBeneficiarios(@RequestParam(value = "pagina", required = false) Integer pagina,
+			@RequestParam(value = "tamanhoPagina", required = false) Integer tamanhoPagina) {
+		if (pagina == null) {
+			pagina = 0;
+		}
+		if (tamanhoPagina == null) {
+			tamanhoPagina = 15;
+		}
+		
+		Pageable pageable = PageRequest.of(pagina, tamanhoPagina);
+		return beneficiarioService.trazerListaDeBeneficiarios(pageable);
 	}
 }
