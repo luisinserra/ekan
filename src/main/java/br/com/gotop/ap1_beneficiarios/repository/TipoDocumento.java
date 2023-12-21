@@ -1,7 +1,5 @@
 package br.com.gotop.ap1_beneficiarios.repository;
 
-import org.springframework.stereotype.Component;
-
 /**
  * @author Luis Inserra
  *

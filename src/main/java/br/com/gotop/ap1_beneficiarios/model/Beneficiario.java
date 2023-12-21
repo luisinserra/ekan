@@ -54,7 +54,7 @@ public class Beneficiario {
 	public java.util.Date getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(java.sql.Date dataNascimento) {
+	public void setDataNascimento(java.util.Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public java.sql.Timestamp getDataInclusao() {

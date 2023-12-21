@@ -1,6 +1,5 @@
 package br.com.gotop.ap1_beneficiarios.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;

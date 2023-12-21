@@ -1,10 +1,7 @@
 package br.com.gotop.ap1_beneficiarios.service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.gotop.ap1_beneficiarios.model.Beneficiario;
 import br.com.gotop.ap1_beneficiarios.model.dto.BeneficiarioDto;
+import br.com.gotop.ap1_beneficiarios.model.dto.RespostaDto;
 import br.com.gotop.ap1_beneficiarios.repository.BeneficiarioRepository;
 
 /**
@@ -42,7 +40,6 @@ public class BeneficiarioService {
 	}
 	
 	public Page<BeneficiarioDto> trazerListaDeBeneficiarios(Pageable pageable) {
-		List<BeneficiarioDto> beneficiarios = new ArrayList<>();
 		Page<Beneficiario> beneficiario = beneficiarioRepository.findAllByOrderByNome(pageable);
 		Page<BeneficiarioDto> dtos = beneficiario.map(b -> new ModelMapper().map(b, BeneficiarioDto.class));
 		for (BeneficiarioDto dto: dtos) {
@@ -54,14 +51,48 @@ public class BeneficiarioService {
 			} catch (Exception e) {}
 			dto.setDtAtualizacao(dataAtualizacao);
 		}
-//		for (Beneficiario benef: beneficiario) {
-//			BeneficiarioDto dto = new BeneficiarioDto(benef);
-//			beneficiarios.add(dto);
-//		}
 		return dtos;
 	}
 	
-	private BeneficiarioDto beneficiarioToDto(Beneficiario beneficiario) {
-		return new BeneficiarioDto(beneficiario);
+	public RespostaDto apagarBeneficiario(Integer idBeneficiario) {
+		Optional<Beneficiario> opBeneficiario = beneficiarioRepository.findById(idBeneficiario);
+		RespostaDto resposta = null;
+		if (!opBeneficiario.isPresent()) {
+			resposta = new RespostaDto("Erro", "Registro não foi localizado");
+			return resposta;
+		} else {
+			Beneficiario beneficiario = opBeneficiario.get();
+			resposta = new RespostaDto("Ok", "");
+			try {
+				beneficiarioRepository.delete(beneficiario);
+			} catch (Exception e) {
+				resposta.setResultado("Erro");
+				resposta.setMensagem("Erro apagando registro: " + e.getLocalizedMessage());
+			}
+		}
+		return resposta;
+	}
+	
+	public RespostaDto alterarBeneficiario(Beneficiario beneficiario) {
+		RespostaDto resposta = null;
+		Optional<Beneficiario> opBeneficiarioGravado = beneficiarioRepository.findById(beneficiario.getId());
+		if (!opBeneficiarioGravado.isPresent()) {
+			resposta = new RespostaDto("Erro", "Registro não foi localizado");
+			return resposta;
+		}
+		Beneficiario beneficiarioGravado = opBeneficiarioGravado.get();
+		resposta = new RespostaDto("Ok", "");
+		Beneficiario beneficiarioAlterado = new Beneficiario();
+		beneficiarioAlterado.setDataNascimento(beneficiario.getDataNascimento());
+		beneficiarioAlterado.setId(beneficiario.getId());
+		beneficiarioAlterado.setNome(beneficiario.getNome());
+		beneficiarioAlterado.setTelefone(beneficiario.getTelefone());
+		try {
+			beneficiarioRepository.save(beneficiarioAlterado);
+		} catch (Exception e) {
+			resposta.setResultado("Erro");
+			resposta.setMensagem("Erro apagando registro: " + e.getLocalizedMessage());
+		}
+		return resposta;
 	}
 }
