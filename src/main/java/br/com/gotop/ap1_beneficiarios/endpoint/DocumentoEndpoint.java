@@ -1,7 +1,6 @@
 package br.com.gotop.ap1_beneficiarios.endpoint;
 
 import java.util.List;
-import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
