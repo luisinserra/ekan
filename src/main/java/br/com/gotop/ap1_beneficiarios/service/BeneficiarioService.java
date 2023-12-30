@@ -30,10 +30,19 @@ public class BeneficiarioService {
 		return beneficiarioGravado;
 	}
 	
-	public Beneficiario buscarBeneficiarioPorId(Integer idBeneficiario) {
+	public BeneficiarioDto buscarBeneficiarioPorId(Integer idBeneficiario) {
 		Optional<Beneficiario> opBeneficiario = beneficiarioRepository.findById(idBeneficiario);
 		if (opBeneficiario.isPresent()) {
-			return opBeneficiario.get();
+			Beneficiario ben = opBeneficiario.get();
+			BeneficiarioDto dto = new ModelMapper().map(ben, BeneficiarioDto.class);
+			dto.setDtNascimento(new SimpleDateFormat("dd/MM/YYYY").format(dto.getDataNascimento()));
+			dto.setDtInclusao(new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(dto.getDataInclusao()));
+			String dataAtualizacao = "Ainda não atualizado";
+			try {
+				dataAtualizacao = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss").format(dto.getDataAtualizacao());
+			} catch (Exception e) {}
+			dto.setDtAtualizacao(dataAtualizacao);
+			return dto;
 		} else {
 			return null;
 		}
@@ -82,13 +91,11 @@ public class BeneficiarioService {
 		}
 		Beneficiario beneficiarioGravado = opBeneficiarioGravado.get();
 		resposta = new RespostaDto("Ok", "");
-		Beneficiario beneficiarioAlterado = new Beneficiario();
-		beneficiarioAlterado.setDataNascimento(beneficiario.getDataNascimento());
-		beneficiarioAlterado.setId(beneficiario.getId());
-		beneficiarioAlterado.setNome(beneficiario.getNome());
-		beneficiarioAlterado.setTelefone(beneficiario.getTelefone());
+		beneficiarioGravado.setDataNascimento(beneficiario.getDataNascimento());
+		beneficiarioGravado.setNome(beneficiario.getNome());
+		beneficiarioGravado.setTelefone(beneficiario.getTelefone());
 		try {
-			beneficiarioRepository.save(beneficiarioAlterado);
+			beneficiarioRepository.save(beneficiarioGravado);
 		} catch (Exception e) {
 			resposta.setResultado("Erro");
 			resposta.setMensagem("Erro apagando registro: " + e.getLocalizedMessage());

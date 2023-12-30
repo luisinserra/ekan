@@ -21,8 +21,7 @@ public class BeneficiarioDocumento {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-//	private int idBeneficiario;
-//	private int idDocumento;
+	private String valor;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_beneficiario", nullable = false)
@@ -39,18 +38,6 @@ public class BeneficiarioDocumento {
 	public void setId(int id) {
 		this.id = id;
 	}
-//	public int getIdBeneficiario() {
-//		return idBeneficiario;
-//	}
-//	public void setIdBeneficiario(int idBeneficiario) {
-//		this.idBeneficiario = idBeneficiario;
-//	}
-//	public int getIdDocumento() {
-//		return idDocumento;
-//	}
-//	public void setIdDocumento(int idDocumento) {
-//		this.idDocumento = idDocumento;
-//	}
 	public Beneficiario getBeneficiario() {
 		return beneficiario;
 	}
@@ -62,6 +49,12 @@ public class BeneficiarioDocumento {
 	}
 	public void setDocumento(Documento documento) {
 		this.documento = documento;
+	}
+	public String getValor() {
+		return valor;
+	}
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 	
 }

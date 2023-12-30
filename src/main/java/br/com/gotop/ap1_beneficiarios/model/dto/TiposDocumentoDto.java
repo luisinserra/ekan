@@ -8,11 +8,13 @@ package br.com.gotop.ap1_beneficiarios.model.dto;
 public class TiposDocumentoDto {
 
 	private String tipoDocumento;
+	private String descricao;
 	
 	public TiposDocumentoDto() {}
 	
-	public TiposDocumentoDto(String tipo) {
+	public TiposDocumentoDto(String tipo, String descricao) {
 		this.tipoDocumento = tipo;
+		this.descricao = descricao;
 	}
 
 	public String getTipoDocumento() {
@@ -21,6 +23,14 @@ public class TiposDocumentoDto {
 
 	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	
 }

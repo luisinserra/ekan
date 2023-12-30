@@ -49,6 +49,14 @@ public class BeneficiarioEndpoint {
 		return json;
 	}
 	
+//	@GetMapping("/beneficiarioComDocumentos")
+//	public String beneficiarioComDocumentos(@RequestParam(value = "idBeneficiario", required = true) final Integer idBeneficiario) {
+//		List<BeneficiarioDocumento> listaBeneficiariosComDocumentos = beneficiarioDocumentoService.trazDocumentosDoBeneficiario2(idBeneficiario);
+//		Gson gson = new Gson();
+//		String json = gson.toJson(listaBeneficiariosComDocumentos);
+//		return json;
+//	}
+	
 	@GetMapping("/beneficiarioComDocumentos")
 	public String beneficiarioComDocumentos(@RequestParam(value = "idBeneficiario", required = true) final Integer idBeneficiario) {
 		List<BeneficiarioDocumento> listaBeneficiariosComDocumentos = beneficiarioDocumentoService.trazDocumentosDoBeneficiario2(idBeneficiario);
@@ -57,10 +65,12 @@ public class BeneficiarioEndpoint {
 		return json;
 	}
 	
+	/*
 	@GetMapping("/buscarBeneficiarioPorId")
 	public Beneficiario buscarBeneficiarioPorId(@RequestParam(value = "idBeneficiario", required = true) final Integer idBeneficiario) {
 		return beneficiarioService.buscarBeneficiarioPorId(idBeneficiario);
 	}
+	*/
 	
 	@GetMapping("/listaPaginadaDeBeneficiarios")
 	public Page<BeneficiarioDto> listaPaginadaDeBeneficiarios(@RequestParam(value = "pagina", required = false) Integer pagina,
@@ -85,5 +95,17 @@ public class BeneficiarioEndpoint {
 	@PostMapping("/alteraBeneficiario")
 	public RespostaDto alteraBeneficiario(@RequestBody final Beneficiario beneficiario) {
 		return beneficiarioService.alterarBeneficiario(beneficiario);
+	}
+	
+	@GetMapping("buscarBeneficiarioPorId")
+	public BeneficiarioDto buscarBeneficiarioPorId(@RequestParam(value = "idBeneficiario", required = false) Integer idBeneficiario) {
+		BeneficiarioDto beneficiario = beneficiarioService.buscarBeneficiarioPorId(idBeneficiario);
+		if (beneficiario == null) {
+			BeneficiarioDto ben = new BeneficiarioDto();
+			ben.setId(0);
+			ben.setNome("Beneficiário não foi localizado");
+			return ben;
+		}
+		return beneficiario;
 	}
 }

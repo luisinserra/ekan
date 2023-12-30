@@ -71,4 +71,16 @@ public class TesteEnum {
 		}
 		
 	}
+	
+	@Test
+	public void testeBuscaEnum() {
+		String tipo = "RG";
+		String descricao = "";
+		for (TipoDocumento t: TipoDocumento.values()) {
+			if (t.toString().equals(tipo)) {
+				descricao = t.getDescricao();
+			}
+		}
+		System.out.println("Descrição = " + descricao);
+	}
 }

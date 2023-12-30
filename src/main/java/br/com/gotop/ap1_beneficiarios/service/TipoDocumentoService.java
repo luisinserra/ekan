@@ -20,7 +20,9 @@ public class TipoDocumentoService {
 		List<TiposDocumentoDto> listaDeTiposDeDocumentos = new ArrayList<>();
 		
 		for (TipoDocumento tipoDocumento: TipoDocumento.values()) {
-			TiposDocumentoDto dto = new TiposDocumentoDto(tipoDocumento.getDescricao());
+			String tipoDeDocumento = tipoDocumento.toString();
+			String descricao = tipoDocumento.getDescricao();
+			TiposDocumentoDto dto = new TiposDocumentoDto(tipoDeDocumento, descricao);
 			listaDeTiposDeDocumentos.add(dto);
 		}
 		return listaDeTiposDeDocumentos;
