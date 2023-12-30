@@ -26,7 +26,7 @@ public class RepositoryConfig {
 		System.setProperty("spring.config.name", "config");
 		System.setProperty("server.port", "3306");
 		System.setProperty("spring.jpa.database", "MYSQL");
-		System.setProperty("spring.datasource.jdbc-url", "jdbc:mysql://mysql.gotop.net.br/gitipit?useTimezone=true&serverTimezone=UTC");
+		System.setProperty("spring.datasource.jdbc-url", "jdbc:mysql://localhost/tivia?useTimezone=true&serverTimezone=UTC");
 	}
 
 	@Primary
